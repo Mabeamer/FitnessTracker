@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fitness Tracker</title>
+</head>
+<body>
+<h3>Workout List</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Date</th>
+        <th>Workout</th>
+        <th>Calories</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for tracker in workout_tracker%}
+    <tr>
+        <td>{{ tracker.username }}</td>
+        <td>{{ tracker.workout_date }}</td>
+        <td>{{ tracker.workout }}</td>
+        <td>{{ tracker.calories }}</td>
+        <td>
+            <a href="{{ url_for('add_work', date = '2023-04-12')}}">
+                <button type="button">Add</button>
+            </a>
+            <a href="{{ url_for('delete_work', id = tracker.id) }}">
+                <button type="submit">Delete an Entry</button>
+            </a>
+        </td>
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>
+
+
+<br>
+<br>
+<h3><a href="{{ url_for('add_work', date = myDate) }}">Add Workout</a></h3>
+<h3><a href="{{ url_for('home') }}">Home</a></h3>
+</body>
+</html>

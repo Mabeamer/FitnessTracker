@@ -1,0 +1,28 @@
+.col-sm-1:hover{
+	-webkit-filter: brightness(80%);
+    filter: brightness(80%);
+    cursor: pointer;
+}
+
+.col-sm-1{
+    height: 18vh;
+    width: calc(100%/7);
+    text-align: center;
+    padding: 55px 0;
+}
+
+button{
+    height: 10vh;
+}
+
+.btn:active,
+.active {
+  top: 2px;
+  left: 1px;
+  box-shadow: none;
+}
+
+.curDay{
+	-webkit-filter: brightness(80%);
+    filter: brightness(80%);    
+}

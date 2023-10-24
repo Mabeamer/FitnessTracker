@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fitness Tracker</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../static/fittracker.js"></script>
+    <!--cant install jquery on machine atm - MB -->
+</head>
+<body>
+    <form>
+        <label for="Name">Exercise Name</label>
+        <input type="text" id="eName" name="eName"> 
+
+        <label for="sAmount">Set Amount:</label>
+        <input type="number" id="sAmount" name="sAmount"> 
+
+        <label for="rAmount">Rep Amount:</label>
+        <input type="number" id="rAmount" name="rAmount"> 
+
+        <!--timer needs to be better-->
+        <label for="dTime">Select a time:</label>
+        <p>minutes</p>
+        <input type="number" id="dMinutes" name="dTime"> 
+        <p>seconds</p>
+        <input type="number" id="dSeconds" name="dTime" min="0" max="60">
+
+        <button id="start" type="button">Start</button>
+        <p id="demo"></p>   
+    </form>
+
+    <div id="timer">
+        <p id="time">Time</p>
+    </div>
+</body>
+</html>

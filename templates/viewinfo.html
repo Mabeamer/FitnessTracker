@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body class="text-center">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <h1 class="col">{{myDate}}</h1>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <h2 class="col">Your Workouts</h2>
+            <div class="col"></div>
+            <h2 class="col">Your Meals</h2>
+            <div class="col"></div>
+        </div>
+        {% set idListW = [] %}
+        {% set idListM = [] %}
+        {% set workCal = [] %}
+        {% set mealCal = [] %}
+
+        {% if zipList == [] %}
+            {% if fullM.first() == None %}
+                {% for wTracker in fullW %}
+                    <div class="row">
+                        <div class="col"></div>
+                            {{ idListW.append(wTracker.id)|default("", True) }}
+                            {{ workCal.append(wTracker.calories)|default("", True) }}
+                            <h2 class="col">{{ wTracker.workout }}: {{ wTracker.calories }} <a href="{{ url_for('delete_work', id = wTracker.id, date = myDate) }}">
+                                <button class="btn btn-outline-primary rounded-circle p-2 lh-1" type="submit">Delete</button>
+                            </a></h2>
+                        <div class="col"></div>
+                        <div class="col"></div>
+                        <div class="col"></div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for mTracker in fullM %}
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col"></div>
+                        <div class="col"></div>
+                        {{ idListM.append(mTracker.id)|default("", True) }}
+                        {{ mealCal.append(mTracker.calories)|default("", True) }}
+                            <h2 class="col">{{ mTracker.meal }}: {{ mTracker.calories }} <a href="{{ url_for('delete_meal', id = mTracker.id, date = myDate) }}">
+                                <button class="btn btn-outline-primary rounded-circle p-2 lh-1" type="submit">Delete</button>   
+                            </a></h2>
+                        <div class="col"></div>
+                    </div>
+                {% endfor %}        
+            {% endif %}
+        {% endif %}
+
+        {% for wTracker, mTracker in fitInfo %}
+                <div class="row">
+                    <div class="col"></div>
+                    {% if wTracker.workout_date|string == myDate and wTracker.username == curUser and wTracker.id not in idListW  %}
+                        {{ idListW.append(wTracker.id)|default("", True) }}
+                        {{ workCal.append(wTracker.calories)|default("", True) }}
+                        <h2 class="col">{{ wTracker.workout }}: {{ wTracker.calories }} <a href="{{ url_for('delete_work', id = wTracker.id, date = myDate) }}">
+                            <button class="btn btn-outline-primary rounded-circle p-2 lh-1" type="submit">Delete</button>
+                        </a></h2>
+                    {% else %}
+                        <div class="col"></div>
+                    {% endif %}
+                    <div class="col"></div>
+                    {% if mTracker.meal_date|string == myDate and mTracker.username == curUser and mTracker.id not in idListM %}
+                        {{ idListM.append(mTracker.id)|default("", True) }}
+                        {{ mealCal.append(mTracker.calories)|default("", True) }}
+                        <h2 class="col">{{ mTracker.meal }}: {{ mTracker.calories }} <a href="{{ url_for('delete_meal', id = mTracker.id, date = myDate) }}">
+                            <button class="btn btn-outline-primary rounded-circle p-2 lh-1" type="submit">Delete</button>
+                        </a></h2>
+                    {% else %}
+                        <div class="col"></div>
+                    {% endif %}
+                    <div class="col"></div>
+                </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col"></div>
+            <h2 class="col">Total Burned: {{ workCal | sum() | default("", True)}}</h2>
+            <div class="col"></div>
+            <h2 class="col">Total Calories: {{ mealCal | sum() | default("", True)}}</h2>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <h2 class="col"><span>&#8203;</span></h2>
+            <div class="col"></div>
+            <h2 class="col"><span>&#8203;</span></h2>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <h2 class="col">
+                <a href="{{ url_for('add_work', date = myDate) }}">Add Workout</a>
+            </h2>
+            <div class="col"></div>
+            <h2 class="col"><a href="{{ url_for('add_meal', date = myDate) }}">Add Meals</a></h2>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <h2 class="col"><span>&#8203;</span></h2>
+            <div class="col"></div>
+            <h2 class="col"><span>&#8203;</span></h2>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <h2 class="col"><a href="{{ url_for('home') }}">Home</a></h2>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <h2 class="col"><span>&#8203;</span></h2>
+            <div class="col"></div>
+            <h2 class="col"><span>&#8203;</span></h2>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <h2 class="col"><a href="{{ url_for('schedule') }}">Schedule</a></h2>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+    </div>
+</body>
+</html>
